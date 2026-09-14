@@ -48,7 +48,7 @@ data class TargetSpec(
     fun matches(method: MethodReference): Boolean =
         (className == null || method.definingClass == className) &&
         (methodName == null || method.name == methodName) &&
-        (methodDescriptor == null || "(${method.parameterTypes.joinToString(\"\")})${method.returnType}" == methodDescriptor)
+        (methodDescriptor == null || "(${method.parameterTypes.joinToString("")})${method.returnType}" == methodDescriptor)
 }
 
 data class AppVersionProfile(
