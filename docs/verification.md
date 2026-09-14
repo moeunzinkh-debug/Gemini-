@@ -25,6 +25,9 @@
 | Metadata microG keys ធៀបនឹង `morphe-patches` branch `main` | ✅ ដូចគ្នា (`app.revanced.*`) |
 | **កូដ** នៃ 3 ឯកសារ microg ធៀបនឹង upstream (byte-for-byte `diff`) | ✅ ខុសគ្នាតែ comment/name/description |
 | រាល់ឈ្មោះ path ដែល script យោង មានពិតប្រាកដ | ✅ ឆ្លង (19 path) |
+| `scripts/prepare-release.py 0.2.0` (សាកល្បង រួច revert) | ✅ បង្កើត metadata + release notes; បដិសេធ `1.2` |
+| shell block "Publish the release" ក្នុង `release.yml` (ដំណើរការជាមួយ `gh` ក្លែង (stub)) | ✅ 4 ករណី៖ tag ត្រូវ → `release create`; tag ខុស → fail; `workflow_dispatch` → ទាញ tag ពី metadata; release មានស្រាប់ → `upload --clobber` |
+| YAML validity នៃ workflows ទាំង 3 | ✅ ឆ្លង |
 
 **កំហុសដែលការត្រួតពិនិត្យទាំងនេះរកឃើញ (ហើយបានជួសជុល)៖** ការជំនួស description បានបង្កើត `,,`
 នៅក្នុងឯកសារ patch ចំនួន 8 — កំហុសដែលធ្វើឲ្យ compile បរាជ័យ។ បើគ្មានការត្រួតពិនិត្យនេះ វានឹងទៅដល់ CI។

@@ -55,6 +55,17 @@ scripts/build-mpp.sh            # → build/release/gemini-standalone-patches-0.
 បន្ទាប់មកបន្ថែម `.mpp` នោះក្នុង Morphe Desktop (Sources → Local)។ ត្រូវការ patch **Clone app** ពី Morphe patches ផ្លូវការ
 ជាមួយ `updatePermissions=true`, `updateProviders=true`។
 
+Workflow `release.yml` build និងផ្សព្វផ្សាយ `.mpp` នេះជា **GitHub Release** (push tag `v*` ឬ Run workflow)។
+ការចេញផ្សាយ version ថ្មី៖
+
+```sh
+python3 scripts/prepare-release.py 0.2.0   # អាប់ដេត patches-bundle.json + បង្កើត release notes
+git commit -am "chore: prepare v0.2.0" && git push origin main
+git tag v0.2.0 && git push origin v0.2.0
+```
+
+ព័ត៌មានលម្អិតអំពី workflows ទាំង 3៖ [docs/automation.md](docs/automation.md)
+
 ## ការកំណត់ version
 
 Patch ទាំងអស់ **version-pinned** — ឈ្មោះ obfuscated (`Lappk;`, `Laiwk;`, …) ប្តូររាល់ version។
