@@ -12,7 +12,9 @@ trap 'rm -rf "$dex_dir"' EXIT
   --output "$dex_dir" "$BUILD_DIR/gemini-patches.jar"
 python3 "$ROOT/scripts/package-mpp.py" "$dex_dir"
 version="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$ROOT/patches-bundle.json")"
-bundle="$BUILD_DIR/release/gemini-microg-patches-$version.mpp"
+# Must match the bundle name that package-mpp.py derives from the same version.
+bundle="$BUILD_DIR/release/gemini-standalone-patches-$version.mpp"
+require_file "$bundle"
 "$KOTLINC" "$ROOT/scripts/kotlin/VerifyMpp.kt" -cp "$MORPHE" -d "$BUILD_DIR/verify-mpp.jar"
 "$JAVA" -cp "$BUILD_DIR/verify-mpp.jar:$MORPHE" VerifyMppKt "$bundle" "$version"
 "$JAVA" -jar "$MORPHE" list-patches --patches "$bundle" --out "$BUILD_DIR/mpp-patch-list.txt"
