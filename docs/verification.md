@@ -38,13 +38,14 @@
 
 ## ៣. បានផ្ទៀងផ្ទាត់ដោយ GitHub Actions (JDK 21 ពិត)
 
-CI run [`34871996270`](https://github.com/moeunzinkh-debug/Gemini-/actions/runs/34871996270) — **ជោគជ័យទាំងអស់**៖
+CI run [`34877832591`](https://github.com/moeunzinkh-debug/Gemini-/actions/runs/34877832591) — **ជោគជ័យទាំងអស់**
+(run មុន៖ [`34871996270`](https://github.com/moeunzinkh-debug/Gemini-/actions/runs/34871996270))៖
 
 | ជំហាន | លទ្ធផល | អ្វីដែលវាបញ្ជាក់ |
 | --- | --- | --- |
 | Validate scripts and repository layout | ✅ | shell syntax + គ្មានឯកសារឯកជន/binary ត្រូវបាន commit |
 | Install pinned tools (SHA-256 verified) | ✅ | Morphe 1.15.0, patches 1.41.0, Kotlin 2.4.10, R8 9.4.17 |
-| **Compile patches** | ✅ | Kotlin ទាំង 13 ឯកសារ compile ជាមួយ Morphe patcher API (មានតែ deprecation warning សម្រាប់ `compatibleWith`) |
+| **Compile patches** | ✅ | Kotlin ទាំង 16 ឯកសារ compile ជាមួយ Morphe patcher API — **គ្មាន warning** (ប្រើ `Compatibility` object ជំនួស `compatibleWith(String)` ដែល deprecated) |
 | **Build and verify the Morphe bundle** | ✅ | D8 បង្កើត Android DEX, `VerifyMpp` ផ្ទៀងផ្ទាត់ Manifest + JVM class ទាំងអស់, Morphe Desktop `list-patches` អាចអាន bundle |
 | **Verify version-specific hook records** | ✅ | បដិសេធន version មិនស្គាល់/versionCode ខុស, hash ត្រូវគ្នា, JSON records generate បាន |
 | Compile APK verification tools | ✅ | ឧបករណ៍ verify ទាំង 6 compile បាន |
@@ -54,6 +55,17 @@ CI run [`34871996270`](https://github.com/moeunzinkh-debug/Gemini-/actions/runs/
    `unresolved reference 'VersionHookRegistry'` ក្នុង `clone/*.kt`
 2. `scripts/build-mpp.sh` នៅតែរកឈ្មោះ bundle ចាស់ `gemini-microg-patches-*.mpp` ខណៈ `package-mpp.py`
    បង្កើត `gemini-standalone-patches-*.mpp`
+
+**បញ្ហា error annotation (ជួសជុលក្នុង PR #6)៖** job `compile` ឆ្លង ប៉ុន្តែបង្ហាញ ❌ 10 ដងលើ
+`.github/workflows/ci.yml`។ មូលហេតុ៖ (1) patch ទាំង 10 ហៅ `compatibleWith(vararg packages: String)`
+ដែល morphe-patcher deprecate ដោយប្រាប់ឲ្យប្រើ `Compatibility` object → kotlinc បញ្ចេញ warning;
+(2) ជំហាន **Report compiler diagnostics** បោះគ្រប់បន្ទាត់ `error:|exception:|warning:` ជា `::error::`
+ជានិច្ច ហើយគ្មាន `file=` ដូច្នេះ annotation ទាំងអស់ទៅជាប់ឯកសារ workflow វិញ។ ឥឡូវ
+`AppCompatibility.kt` ផ្តល់ `Compatibility` object (morphe-patcher **1.12.0** = version ដែល
+morphe-desktop 1.15.0 bundle) ហើយជំហាននោះរក្សា severity ពិត (`::warning::`) និងភ្ជាប់ annotation
+ទៅឯកសារ `.kt` + line/column។ លទ្ធផល៖ annotation ដែលនៅសល់មានតែ 2 warning របស់ GitHub
+(Node 20 / `setup-java` v4) ដែលមិនមែនជាកំហុស compile។
+
 
 ## ៤. មិនទាន់បានផ្ទៀងផ្ទាត់ — ត្រូវធ្វើ
 
