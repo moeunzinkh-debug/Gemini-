@@ -55,6 +55,9 @@ scripts/build-mpp.sh            # → build/release/gemini-standalone-patches-0.
 បន្ទាប់មកបន្ថែម `.mpp` នោះក្នុង Morphe Desktop (Sources → Local)។ ត្រូវការ patch **Clone app** ពី Morphe patches ផ្លូវការ
 ជាមួយ `updatePermissions=true`, `updateProviders=true`។
 
+ការពន្យល់លម្អិតជាភាសាខ្មែរអំពីជំហាន build `.mpp` (compile → dex → package → verify)៖
+[docs/build-mpp-khmer.md](docs/build-mpp-khmer.md)
+
 Workflow `release.yml` build និងផ្សព្វផ្សាយ `.mpp` នេះជា **GitHub Release** (push tag `v*` ឬ Run workflow)។
 ការចេញផ្សាយ version ថ្មី៖
 
