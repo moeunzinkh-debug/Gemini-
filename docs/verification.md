@@ -33,11 +33,28 @@
 > ព្រោះ verifier ទាំងនោះត្រូវការ JVM)។ ការរាប់តុល្យភាព brace/paren បាន flag ឯកសារ 2 ប៉ុន្តែវាក៏ flag ឯកសារ upstream
 > ដូចគ្នាដែរ (control experiment) — ដូច្នេះវាជា artifact នៃការ strip string/comment មិនមែនកំហុស syntax ទេ។
 
-## ៣. មិនទាន់បានផ្ទៀងផ្ទាត់ — ត្រូវធ្វើ
+## ៣. បានផ្ទៀងផ្ទាត់ដោយ GitHub Actions (JDK 21 ពិត)
 
-- [ ] **Compile Kotlin** — មិនអាចធ្វើក្នុង sandbox បានទេ (គ្មាន JDK; `release-assets.githubusercontent.com`,
-      `dl.google.com` និង `repo1.maven.org` ត្រូវបានទប់ស្កាត់)។ **CI workflow នឹង compile វា**។
-- [ ] `scripts/build-mpp.sh` + `VerifyMpp` (ត្រូវការ morphe-desktop.jar + R8)
+CI run [`34871996270`](https://github.com/moeunzinkh-debug/Gemini-/actions/runs/34871996270) — **ជោគជ័យទាំងអស់**៖
+
+| ជំហាន | លទ្ធផល | អ្វីដែលវាបញ្ជាក់ |
+| --- | --- | --- |
+| Validate scripts and repository layout | ✅ | shell syntax + គ្មានឯកសារឯកជន/binary ត្រូវបាន commit |
+| Install pinned tools (SHA-256 verified) | ✅ | Morphe 1.15.0, patches 1.41.0, Kotlin 2.4.10, R8 9.4.17 |
+| **Compile patches** | ✅ | Kotlin ទាំង 13 ឯកសារ compile ជាមួយ Morphe patcher API (មានតែ deprecation warning សម្រាប់ `compatibleWith`) |
+| **Build and verify the Morphe bundle** | ✅ | D8 បង្កើត Android DEX, `VerifyMpp` ផ្ទៀងផ្ទាត់ Manifest + JVM class ទាំងអស់, Morphe Desktop `list-patches` អាចអាន bundle |
+| **Verify version-specific hook records** | ✅ | បដិសេធន version មិនស្គាល់/versionCode ខុស, hash ត្រូវគ្នា, JSON records generate បាន |
+| Compile APK verification tools | ✅ | ឧបករណ៍ verify ទាំង 6 compile បាន |
+
+**កំហុស ២ ដែល CI រកឃើញ ហើយបានជួសជុលរួច** (មិនអាចរកឃើញក្នុង sandbox បានទេ)៖
+1. `VersionHookRegistry.kt:51` — `joinToString(\"\")` មាន backslash ជាប់ → syntax error ហើយបណ្តាលឲ្យ
+   `unresolved reference 'VersionHookRegistry'` ក្នុង `clone/*.kt`
+2. `scripts/build-mpp.sh` នៅតែរកឈ្មោះ bundle ចាស់ `gemini-microg-patches-*.mpp` ខណៈ `package-mpp.py`
+   បង្កើត `gemini-standalone-patches-*.mpp`
+
+## ៤. មិនទាន់បានផ្ទៀងផ្ទាត់ — ត្រូវធ្វើ
+
+- [ ] `scripts/build-all.sh` + `VerifyDexBranches` + `VerifyWorkProfile` (ត្រូវការ APK ដើម)
 - [ ] `scripts/build-all.sh` + `VerifyDexBranches` + `VerifyWorkProfile` (ត្រូវការ APK ដើម)
 - [ ] ការដំឡើងលើទូរស័ព្ទពិត: login, chat, force-stop រួចបើកឡើងវិញ
 - [ ] Secure Folder (user 150)៖ គ្មាន error `(19)`, គ្មាន redirect ទៅ web
@@ -45,7 +62,7 @@
       (បានផ្ទៀងផ្ទាត់ពី source របស់ Morphe) ប៉ុន្តែឥរិយាបថលើទូរស័ព្ទជាមួយ 7.1.2 មិនទាន់បានសាកល្បងទេ។
 - [ ] Gemini Live, សំឡេង, ការកំណត់ device assistant
 
-## ៤. ហេតុអ្វី `docs/versions/*.json` មិនត្រូវបាន commit
+## ៥. ហេតុអ្វី `docs/versions/*.json` មិនត្រូវបាន commit
 
 ឯកសារ JSON ទាំងនោះត្រូវបាន **បង្កើតដោយស្វ័យប្រវត្តិ** ពី Kotlin definitions (`check-hook-profiles.sh --write`)។
 ដោយសារគ្មាន JVM ក្នុង sandbox ដើម្បី generate វា យើង gitignore វា ហើយឲ្យ CI generate ជំនួសវិញ។
@@ -57,7 +74,7 @@ scripts/check-hook-profiles.sh --write
 # ដក docs/versions/.gitignore ចេញ រួច git add docs/versions
 ```
 
-## ៥. ចំណុចដែល upstream ព្រមាន (កុំធ្វើឡើងវិញ)
+## ៦. ចំណុចដែល upstream ព្រមាន (កុំធ្វើឡើងវិញ)
 
 - កុំកែ `isManagedProfile` ទាំង Android — គ្រាន់តែកែលក្ខខណ្ឌ error 19 ក្នុង `appk.k`
 - កុំបញ្ចូល permission code នៅចុង `onCreate` (p0 ត្រូវបាន overwrite)

@@ -81,4 +81,4 @@ Label → `Gemini (Morphe)`, `<queries>` សម្រាប់ MicroG RE, `MICRO
 
 `Account Switch Lock Bypass`, `Account Sync Binder Loop Fix`, `Account ID Fallback for Clone` —
 upstream បានសាកល្បងហើយ **បរាជ័យ** (hang, sync loop, token មិនត្រូវគ្នា) ហើយទុកជា `default=false`។
-យើងដកចេញទាំងស្រុង។ សូមមើល [verification.md §5](verification.md)។
+យើងដកចេញទាំងស្រុង។ សូមមើល [verification.md §6](verification.md)។
