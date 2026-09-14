@@ -3,6 +3,7 @@ package app.morphe.patches.google.microg
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 
@@ -19,7 +20,7 @@ val gmsSignatureBypassPatch = bytecodePatch(
     description = "Bypass Google Play Services signature mismatch (SERVICE_INVALID) and availability checks to always succeed (SUCCESS / true).",
     default = true
 ) {
-    compatibleWith("com.google.android.googlequicksearchbox")
+    compatibleWith(AppCompatibility.googleApp)
 
     execute {
         VersionHookRegistry.requireProfile(packageMetadata)

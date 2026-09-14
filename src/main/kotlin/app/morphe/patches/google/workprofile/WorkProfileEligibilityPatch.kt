@@ -3,6 +3,7 @@ package app.morphe.patches.google.workprofile
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import com.android.tools.smali.dexlib2.Opcode
@@ -17,7 +18,7 @@ val workProfileEligibilityPatch = bytecodePatch(
     description = "Avoid WORK_PROFILE_NOT_SUPPORTED (19) in Secure Folder with the existing profile permission branch.",
     default = true
 ) {
-    compatibleWith("com.google.android.googlequicksearchbox")
+    compatibleWith(AppCompatibility.googleApp)
     execute {
         val spec = VersionHookRegistry.target(HookId.WORK_PROFILE_ELIGIBILITY, packageMetadata)
         val candidates = getAllClassesWithString(spec.anchorStrings[0])

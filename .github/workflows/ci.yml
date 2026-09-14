@@ -36,8 +36,15 @@ jobs:
         if: always()
         run: |
           test -f build/compile.log || exit 0
+          # Keep the compiler's own severity: a deprecation warning must not be reported as an
+          # error, and the annotation must land on the Kotlin file instead of this workflow.
           grep -E 'error:|exception:|warning:' build/compile.log | head -40 | while IFS= read -r line; do
-            printf '::error::%s\n' "${line//%/%25}"
+            case "$line" in *'warning:'*) level=warning ;; *) level=error ;; esac
+            location=''
+            if [[ "$line" =~ ^([A-Za-z0-9_./-]+\.kt):([0-9]+):([0-9]+): ]]; then
+              location=" file=${BASH_REMATCH[1]},line=${BASH_REMATCH[2]},col=${BASH_REMATCH[3]}"
+            fi
+            printf '::%s%s::%s\n' "$level" "$location" "${line//%/%25}"
           done
       - name: Build and verify the Morphe bundle
         run: scripts/build-mpp.sh

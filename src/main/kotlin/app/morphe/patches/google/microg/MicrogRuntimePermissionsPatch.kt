@@ -3,6 +3,7 @@ package app.morphe.patches.google.microg
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructionsWithLabels
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import com.android.tools.smali.dexlib2.Opcode
@@ -15,7 +16,7 @@ val microgRuntimePermissionsPatch = bytecodePatch(
     description = "Requests account access and microG extended access on Gemini startup.",
     default = true
 ) {
-    compatibleWith("com.google.android.googlequicksearchbox")
+    compatibleWith(AppCompatibility.googleApp)
     dependsOn(googleAppManifestPatch)
     execute {
         val spec = VersionHookRegistry.target(HookId.MICROG_RUNTIME_PERMISSIONS, packageMetadata)

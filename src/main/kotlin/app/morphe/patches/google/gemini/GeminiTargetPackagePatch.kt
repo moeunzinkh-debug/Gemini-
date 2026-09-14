@@ -3,6 +3,7 @@ package app.morphe.patches.google.gemini
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import com.android.tools.smali.dexlib2.Opcode
@@ -18,7 +19,7 @@ val geminiTargetPackagePatch = bytecodePatch(
     description = "Points the Gemini launcher at the cloned Google app (com.google.android.googlequicksearchbox.morphe) so it never asks for the Play Store Google app.",
     default = true
 ) {
-    compatibleWith("com.google.android.apps.bard")
+    compatibleWith(AppCompatibility.geminiLauncher)
 
     execute {
         VersionHookRegistry.requireProfile(packageMetadata)

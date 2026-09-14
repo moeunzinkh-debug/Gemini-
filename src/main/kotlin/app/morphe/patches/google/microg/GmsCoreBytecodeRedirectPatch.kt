@@ -4,6 +4,7 @@ import app.morphe.patcher.StringComparisonType
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import com.android.tools.smali.dexlib2.Opcode
@@ -23,7 +24,7 @@ val gmsCoreBytecodePatch = bytecodePatch(
     description = "Redirects the GMS package name, authority, and provider authority inside the Google app to MicroG RE.",
     default = true
 ) {
-    compatibleWith("com.google.android.googlequicksearchbox")
+    compatibleWith(AppCompatibility.googleApp)
 
     execute {
         VersionHookRegistry.requireProfile(packageMetadata)

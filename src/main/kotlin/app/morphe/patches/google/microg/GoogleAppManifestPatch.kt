@@ -1,6 +1,7 @@
 package app.morphe.patches.google.microg
 
 import app.morphe.patcher.patch.resourcePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import org.w3c.dom.Element
@@ -14,7 +15,7 @@ val googleAppManifestPatch = resourcePatch(
     description = "Change the app display name to 'Google (Morphe)', give MicroG visibility, remove the Split constraint and disable the crash receiver.",
     default = true
 ) {
-    compatibleWith("com.google.android.googlequicksearchbox")
+    compatibleWith(AppCompatibility.googleApp)
 
     execute {
         VersionHookRegistry.requireProfile(packageMetadata)
