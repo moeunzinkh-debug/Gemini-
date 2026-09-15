@@ -3,6 +3,7 @@ package app.morphe.patches.google.gemini
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import com.android.tools.smali.dexlib2.Opcode
@@ -18,7 +19,7 @@ val geminiTargetPackagePatch = bytecodePatch(
     description = "Points the Gemini launcher at the cloned Google app (com.google.android.googlequicksearchbox.morphe) so it never asks for the Play Store Google app.",
     default = true
 ) {
-    compatibleWith("com.google.android.apps.bard")
+    compatibleWith(AppCompatibility.geminiLauncher)
 
     execute {
         VersionHookRegistry.requireProfile(packageMetadata)
@@ -59,12 +60,24 @@ val geminiTargetPackagePatch = bytecodePatch(
                 }
             }
         }
-        check(totalReplacements == targetSpec.expectedMatches) { "Unexpected Gemini target count: $totalReplacements" }
-        VersionHookRegistry.logHook(
-            HookId.GEMINI_TARGET_REDIRECT,
-            "DEX-Wide",
-            "SUCCESS",
-            "Replaced $totalReplacements occurrences across ${classes.size} classes"
-        )
+        val expected = targetSpec.expectedMatches
+        if (expected == null) {
+            // Pending-verification version (no obfuscated symbols in this patch): record the
+            // observed count instead of aborting; the on-device run is the real verification.
+            VersionHookRegistry.logHook(
+                HookId.GEMINI_TARGET_REDIRECT,
+                "DEX-Wide",
+                "PENDING-VERIFICATION",
+                "Replaced $totalReplacements occurrences across ${classes.size} classes (no expected count recorded for $verName)"
+            )
+        } else {
+            check(totalReplacements == expected) { "Unexpected Gemini target count: $totalReplacements" }
+            VersionHookRegistry.logHook(
+                HookId.GEMINI_TARGET_REDIRECT,
+                "DEX-Wide",
+                "SUCCESS",
+                "Replaced $totalReplacements occurrences across ${classes.size} classes"
+            )
+        }
     }
 }

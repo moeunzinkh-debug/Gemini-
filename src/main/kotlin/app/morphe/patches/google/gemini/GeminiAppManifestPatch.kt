@@ -1,6 +1,7 @@
 package app.morphe.patches.google.gemini
 
 import app.morphe.patcher.patch.resourcePatch
+import app.morphe.patches.google.common.AppCompatibility
 import app.morphe.patches.google.common.HookId
 import app.morphe.patches.google.common.VersionHookRegistry
 import org.w3c.dom.Element
@@ -20,7 +21,7 @@ val geminiAppManifestPatch = resourcePatch(
     description = "Change the app display name to 'Gemini (Morphe)', give MicroG visibility, remove the Split constraint and disable the crash receiver.",
     default = true
 ) {
-    compatibleWith("com.google.android.apps.bard")
+    compatibleWith(AppCompatibility.geminiLauncher)
 
     execute {
         VersionHookRegistry.requireProfile(packageMetadata)
