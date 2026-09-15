@@ -7,7 +7,7 @@ Morphe patch source ដែល build ចេញជា **APK ៣ ក្នុងម
 > bard គ្រាន់តែជា launcher/shell (`BardEntryPointActivity`)។ ដូច្នេះដំណោះស្រាយគឺ build Google app clone ជាមួយគ្នា
 > ហើយ redirect Gemini ទៅ clone នោះ (patch `Gemini Redirect to Cloned Google App`)។
 
-**គោលដៅដែលបានផ្ទៀងផ្ទាត់:** Google `17.54.18.ve.arm64` (301800642), Gemini `1.0.958859967` (332), microG RE `7.1.2`
+**គោលដៅដែលបានផ្ទៀងផ្ទាត់:** Google `17.54.18.ve.arm64` (301800642), Gemini `1.0.958859967` (332) និង Gemini `1.0.971139365` (341, profile **pending** — Manager-only, គ្មានឈ្មោះ obfuscated; សូមមើល [docs/versions/README.md](docs/versions/README.md)), microG RE `7.1.2`
 (`app.revanced.android.gms`)។ សូមអាន [docs/verification.md](docs/verification.md) សម្រាប់អ្វីដែលបាន/មិនទាន់បានផ្ទៀងផ្ទាត់។
 
 ---

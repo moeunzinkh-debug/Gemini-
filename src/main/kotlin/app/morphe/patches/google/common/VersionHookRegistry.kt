@@ -2,6 +2,7 @@ package app.morphe.patches.google.common
 
 import app.morphe.patcher.PackageMetadata
 import app.morphe.patches.google.common.versions.gemini10958859967
+import app.morphe.patches.google.common.versions.gemini10971139365
 import app.morphe.patches.google.common.versions.google175418
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 
@@ -63,7 +64,7 @@ data class AppVersionProfile(
 
 object VersionHookRegistry {
     // Add a new version file and register it here. Never widen a verified version to a wildcard.
-    val profiles: List<AppVersionProfile> = listOf(google175418, gemini10958859967)
+    val profiles: List<AppVersionProfile> = listOf(google175418, gemini10958859967, gemini10971139365)
 
     init {
         check(profiles.map { it.packageName to it.versionName }.distinct().size == profiles.size)

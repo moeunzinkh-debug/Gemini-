@@ -8,6 +8,17 @@ JSON ក្នុង directory នេះគឺ **build output** (generate ដោ
 | --- | --- |
 | Google `17.54.18.ve.arm64` / `301800642` | [Google_17_54_18.kt](../../src/main/kotlin/app/morphe/patches/google/common/versions/Google_17_54_18.kt) |
 | Gemini `1.0.958859967` / `332` | [Gemini_1_0_958859967.kt](../../src/main/kotlin/app/morphe/patches/google/common/versions/Gemini_1_0_958859967.kt) |
+| Gemini `1.0.971139365` / `341` (pending — Manager-only) | [Gemini_1_0_971139365.kt](../../src/main/kotlin/app/morphe/patches/google/common/versions/Gemini_1_0_971139365.kt) |
+
+## កម្រិត profile ពីរ
+
+- **Verified (build flow)** — មាន `inputSha256` ពេញលេញ ហើយ `config/inputs.sha256` ជ្រើសរើសវាសម្រាប់
+  `scripts/build-all.sh`។ ឈ្មោះ obfuscated និង `expectedMatches` ត្រូវបានបង្ខំ (check) ពេល patch។
+- **Pending (Manager-only)** — សម្រាប់ version ដែលឧបករណ៍អ្នកប្រើបាន update តាម Play Store
+  (ឧ. Gemini `1.0.971139365`)។ `inputSha256` ទទេ (មិនចូលក្នុង build flow) ហើយ
+  `expectedMatches = null` ដូច្នេះ patch គ្រាន់តែ **log** ចំនួនដែលសង្កេតឃើញ ជំនួសឲ្យការបរាជ័យ —
+  ព្រោះ patch របស់ launcher មិនប្រើឈ្មោះ obfuscated (គ្រាន់តែជំនួស string + កែ manifest)។
+  ការផ្ទៀងផ្ទាត់ពិតគឺលទ្ធផលលើទូរស័ព្ទ (launcher បើក cloned Google app)។
 
 ## អ្វីដែលត្រូវកត់ត្រា
 

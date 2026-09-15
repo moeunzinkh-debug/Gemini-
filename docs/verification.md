@@ -69,6 +69,9 @@ morphe-desktop 1.15.0 bundle) ហើយជំហាននោះរក្សា s
 
 ## ៤. មិនទាន់បានផ្ទៀងផ្ទាត់ — ត្រូវធ្វើ
 
+- [ ] **Gemini `1.0.971139365` (341)** — profile pending (Manager-only)៖ patch លើទូរស័ព្ទ រួចបញ្ជាក់ថា
+      launcher បើក cloned Google app; បើចំនួន string replacement ខុសពី 7 សូម record ចំនួនពិតទៅ
+      `expectedMatches` ក្នុង `Gemini_1_0_971139365.kt` ។
 - [ ] `scripts/build-all.sh` + `VerifyDexBranches` + `VerifyWorkProfile` (ត្រូវការ APK ដើម)
 - [ ] `scripts/build-all.sh` + `VerifyDexBranches` + `VerifyWorkProfile` (ត្រូវការ APK ដើម)
 - [ ] ការដំឡើងលើទូរស័ព្ទពិត: login, chat, force-stop រួចបើកឡើងវិញ
